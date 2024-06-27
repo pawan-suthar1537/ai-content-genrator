@@ -1,6 +1,8 @@
+"use client";
 import { FileClock, Home, Settings2, WalletIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const Sidenav = () => {
@@ -27,6 +29,7 @@ const Sidenav = () => {
     },
   ];
 
+  const path = usePathname();
   return (
     <div className="h-screen p-5 shadow-sm border">
       <Link href="/">
@@ -42,9 +45,14 @@ const Sidenav = () => {
       </Link>
       <div className="mt-5">
         {MENULIST.map((item, index) => (
-          <div className="flex gap-2 p-3 mb-3 rounded-lg hover:bg-primary hover:text-white cursor-pointer">
-            <item.icon />
-            <h2>{item.name}</h2>
+          <div
+            key={index}
+            className={`flex gap-2 p-3 mb-3 rounded-lg hover:bg-primary hover:text-white cursor-pointer items-center ${
+              path == item.href && "bg-primary text-white"
+            }`}
+          >
+            <item.icon className="h-6 w-6" />
+            <h2 className="text-lg">{item.name}</h2>
           </div>
         ))}
       </div>

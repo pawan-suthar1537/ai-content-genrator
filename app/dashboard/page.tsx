@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
+import SerchSection from "./_components/SerchSection";
+import TemplateList from "./_components/TemplateList";
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <div>
+      {/* serch section */}
+      <SerchSection />
 
-export default Dashboard
+      {/* template listing section */}
+      <TemplateList />
+    </div>
+  );
+};
+
+export default Dashboard;
