@@ -65,8 +65,7 @@ export default [
     desc: "Generate Instagram hashtags based on a given topic",
     category: "Social Media",
     icon: "https://cdn-icons-png.flaticon.com/128/733/733558.png",
-    aiprompt:
-      "generate a list of relevant Instagram hashtags based on the given topic",
+    aiprompt: "generate relevant Instagram hashtags based on the given topic",
     slug: "generate-instagram-hashtags",
     form: [
       {

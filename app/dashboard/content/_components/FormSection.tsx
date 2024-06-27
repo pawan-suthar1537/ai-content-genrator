@@ -4,13 +4,15 @@ import { TEMPLATE } from "../../_components/TemplateList";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 interface PROPS {
   selectedtemplate?: TEMPLATE;
-  Userforminput:any
+  Userforminput: any;
+  loading: boolean;
 }
 
-const FormSection = ({ selectedtemplate,Userforminput }: PROPS) => {
+const FormSection = ({ selectedtemplate, Userforminput, loading }: PROPS) => {
   const [Formdata, setFormdata] = useState<any>();
   const onSubmit = (e: any) => {
     e.preventDefault();
@@ -57,7 +59,8 @@ const FormSection = ({ selectedtemplate,Userforminput }: PROPS) => {
             ) : null}
           </div>
         ))}
-        <Button type="submit" className="w-full py-6">
+        <Button type="submit" className="w-full py-6" disabled={loading}>
+          {loading && <Loader2 className="animate-spin" />}
           Genrate
         </Button>
       </form>

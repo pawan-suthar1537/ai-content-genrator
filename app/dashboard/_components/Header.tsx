@@ -10,7 +10,7 @@ const Header = () => {
       </div>
       {/* message */}
       <div>
-        <h2 className="bg-primary p-1 rounded-full text-sm text-white px-2">
+        <h2 className="hidden lg:block lg:bg-primary lg:p-2 lg:rounded-full lg:text-sm lg:text-white lg:px-2 ">
           Join membership program just for $10/month and get access to all
         </h2>
       </div>
