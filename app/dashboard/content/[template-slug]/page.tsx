@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { chatSession } from "@/utils/Aimodel";
+import { db } from "@/utils/DB";
+import { AIOutput } from "@/utils/Schema";
+import { useUser } from "@clerk/nextjs";
+import moment from "moment";
 
 interface PROPS {
   params: {
@@ -16,6 +20,7 @@ interface PROPS {
 }
 
 const CreateNewContent = (props: PROPS) => {
+  const { user } = useUser();
   const selectedtemplate: TEMPLATE | undefined = Templates?.find(
     (item) => item.slug == props.params["template-slug"]
   );
@@ -27,10 +32,33 @@ const CreateNewContent = (props: PROPS) => {
     const selectedprompt = selectedtemplate?.aiprompt;
     const final = JSON.stringify(Formdata) + "," + selectedprompt;
     const result = await chatSession.sendMessage(final);
-    setaioutput(result.response.text());
-    console.log(result.response.text());
+    const responseText = await result.response.text();
+    setaioutput(responseText);
+    await saveInDB(JSON.stringify(Formdata), selectedtemplate?.slug, aioutput);
+    console.log(responseText);
     setloading(false);
   };
+
+  const saveInDB = async (
+    formData: string,
+    slug: any | undefined,
+    aiRes: string
+  ) => {
+    if (!slug) {
+      console.error("Template slug is undefined");
+      return;
+    }
+
+    const result = await db.insert(AIOutput).values({
+      formData: formData,
+      templateslug: slug,
+      aires: aiRes,
+      createdBy: user?.primaryEmailAddress?.emailAddress ?? "",
+      createdAt: moment().format("DD/MM/yyyy"),
+    });
+    console.log(result);
+  };
+
   return (
     <div className="p-10">
       <Link href={"/dashboard"}>

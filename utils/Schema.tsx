@@ -6,5 +6,5 @@ export const AIOutput = pgTable("aioutput", {
   aires: text("aires"),
   templateslug: varchar("templateslug").notNull(),
   createdBy: varchar("createdBy").notNull(),
-  updatedBy: varchar("updatedBy"),
+  createdAt: varchar("createdAt"),
 });
