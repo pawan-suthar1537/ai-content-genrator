@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import FormSection from "../_components/FormSection";
 import RichTextedior from "../_components/RichTextedior";
 import { TEMPLATE } from "../../_components/TemplateList";
@@ -12,6 +12,8 @@ import { db } from "@/utils/DB";
 import { AIOutput } from "@/utils/Schema";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
+import { Totalusagecontect } from "@/app/(context)/usagecontext";
+import { useRouter } from "next/navigation";
 
 interface PROPS {
   params: {
@@ -26,37 +28,36 @@ const CreateNewContent = (props: PROPS) => {
   );
   const [loading, setloading] = useState(false);
   const [aioutput, setaioutput] = useState<string>("");
+  const { totaluse, settotaluse } = useContext(Totalusagecontect);
+  const router = useRouter();
 
   const GenrateAIcontent = async (Formdata: any) => {
+    if (totaluse >= 10000) {
+      router.push("/dashboard/billing");
+      return;
+    }
     setloading(true);
     const selectedprompt = selectedtemplate?.aiprompt;
     const final = JSON.stringify(Formdata) + "," + selectedprompt;
     const result = await chatSession.sendMessage(final);
-    const responseText = await result.response.text();
-    setaioutput(responseText);
-    await saveInDB(JSON.stringify(Formdata), selectedtemplate?.slug, aioutput);
-    console.log(responseText);
+    setaioutput(result.response.text());
+    await SaveinDB(
+      JSON.stringify(Formdata),
+      selectedtemplate?.slug,
+      result?.response.text()
+    );
+    console.log(result.response.text());
     setloading(false);
   };
 
-  const saveInDB = async (
-    formData: string,
-    slug: any | undefined,
-    aiRes: string
-  ) => {
-    if (!slug) {
-      console.error("Template slug is undefined");
-      return;
-    }
-
+  const SaveinDB = async (Formdata: any, slug: any, aires: string) => {
     const result = await db.insert(AIOutput).values({
-      formData: formData,
+      formData: Formdata,
       templateslug: slug,
-      aires: aiRes,
-      createdBy: user?.primaryEmailAddress?.emailAddress ?? "",
+      aires: aires,
+      createdBy: user?.primaryEmailAddress?.emailAddress,
       createdAt: moment().format("DD/MM/yyyy"),
     });
-    console.log(result);
   };
 
   return (

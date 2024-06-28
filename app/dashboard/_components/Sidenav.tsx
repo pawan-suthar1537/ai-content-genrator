@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import Usagetrack from "./Usagetrack";
 
 const Sidenav = () => {
   const MENULIST = [
@@ -31,7 +32,7 @@ const Sidenav = () => {
 
   const path = usePathname();
   return (
-    <div className="h-screen p-5 shadow-sm border">
+    <div className="h-screen relative p-5 shadow-sm border">
       <Link href="/">
         <div className="flex justify-center border-b-2  py-2">
           <Image
@@ -55,6 +56,9 @@ const Sidenav = () => {
             <h2 className="text-lg">{item.name}</h2>
           </div>
         ))}
+      </div>
+      <div className="absolute bottom-10 left-0 w-full">
+        <Usagetrack />
       </div>
     </div>
   );
