@@ -1,6 +1,6 @@
 export default [
   {
-    name: "BLog TItle",
+    name: "Blog Title",
     desc: "This is a blog title",
     category: "Blog",
     icon: "https://cdn-icons-png.flaticon.com/128/3433/3433033.png",
