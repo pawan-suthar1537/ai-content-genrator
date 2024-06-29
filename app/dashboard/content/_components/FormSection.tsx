@@ -29,8 +29,8 @@ const FormSection = ({ selectedtemplate, Userforminput, loading }: PROPS) => {
     <div className="p-5  shadow-md border rounded-lg">
       {/* @ts-ignore */}
       <Image
-        src={selectedtemplate?.icon}
-        alt={selectedtemplate?.name}
+        src={selectedtemplate?.icon!}
+        alt={selectedtemplate?.name!}
         width={70}
         height={70}
         unoptimized
