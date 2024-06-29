@@ -46,15 +46,17 @@ const Sidenav = () => {
       </Link>
       <div className="mt-5">
         {MENULIST.map((item, index) => (
-          <div
-            key={index}
-            className={`flex gap-2 p-3 mb-3 rounded-lg hover:bg-primary hover:text-white cursor-pointer items-center ${
-              path == item.href && "bg-primary text-white"
-            }`}
-          >
-            <item.icon className="h-6 w-6" />
-            <h2 className="text-lg">{item.name}</h2>
-          </div>
+          <Link key={index} href={item.href}>
+            <div
+              key={index}
+              className={`flex gap-2 p-3 mb-3 rounded-lg hover:bg-primary hover:text-white cursor-pointer items-center ${
+                path == item.href && "bg-primary text-white"
+              }`}
+            >
+              <item.icon className="h-6 w-6" />
+              <h2 className="text-lg">{item.name}</h2>
+            </div>
+          </Link>
         ))}
       </div>
       <div className="absolute bottom-10 left-0 w-full">
