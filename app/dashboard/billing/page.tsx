@@ -1,11 +1,19 @@
 "use client";
+import { UserSubcriptionUsage } from "@/app/(context)/UserSubcriptionusage";
+import { db } from "@/utils/DB";
+import { Usersubcription } from "@/utils/Schema";
+import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
-import React, { useState } from "react";
+import moment from "moment";
+import React, { useContext, useState } from "react";
 import { handler } from "tailwindcss-animate";
 
 const Billing = () => {
   const [load, setload] = useState(false);
+  const { user } = useUser();
+  const { UserSubcription, setUserSubcription } =
+    useContext(UserSubcriptionUsage);
   const CreateSUbcription = () => {
     setload(true);
     axios.post("/api/create-subcription", {}).then(
@@ -28,6 +36,9 @@ const Billing = () => {
       description: "Monthly Plan",
       handler: async (res: any) => {
         console.log(res);
+        if (res) {
+          SaveSubcription(res?.razorpay_payment_id);
+        }
         setload(false);
       },
     };
@@ -36,9 +47,24 @@ const Billing = () => {
     const rzp = new window.Razorpay(options);
     rzp.open();
   };
+
+  const SaveSubcription = async (paymentId: string) => {
+    const result = await db.insert(Usersubcription).values({
+      email: user?.primaryEmailAddress?.emailAddress,
+      username: user?.fullName,
+      active: true,
+      paymentId: paymentId,
+      joinDate: moment().format("DD/MM/yyyy"),
+    });
+    console.log(result);
+    if (result) {
+      window.location.reload();
+    }
+  };
+
   return (
     <div className="text-center py-8">
-      <script src="https://checkout.razorpay.com/v1/checkout.js"></script> 
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       <h1 className="text-6xl font-bold mt-10 mb-16">
         Upgrade With Monthly Plan
       </h1>
@@ -72,10 +98,10 @@ const Billing = () => {
           <button
             disabled={load}
             onClick={() => CreateSUbcription()}
-            className="bg-blue-500 text-white flex gap-2 items-center py-2 px-4 rounded-lg hover:bg-blue-600"
+            className="bg-blue-500 text-white flex gap-2 items-center py-2 px-4 w-full justify-center items-center text-center rounded-lg hover:bg-blue-600"
           >
             {load && <Loader2 className="animate-spin" />}
-            Get Started
+            {UserSubcription ? "Active Plan" : "Get Started"}
           </button>
         </div>
       </div>
