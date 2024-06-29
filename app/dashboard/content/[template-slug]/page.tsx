@@ -51,11 +51,16 @@ const CreateNewContent = (props: PROPS) => {
   };
 
   const SaveinDB = async (Formdata: any, slug: any, aires: string) => {
+    if (!slug || !user?.primaryEmailAddress?.emailAddress) {
+      console.error("Template slug or user email address is missing");
+      return;
+    }
+
     const result = await db.insert(AIOutput).values({
       formData: Formdata,
       templateslug: slug,
       aires: aires,
-      createdBy: user?.primaryEmailAddress?.emailAddress,
+      createdBy: user.primaryEmailAddress.emailAddress,
       createdAt: moment().format("DD/MM/yyyy"),
     });
   };
