@@ -6,6 +6,7 @@ import { db } from "@/utils/DB";
 import { AIOutput, Usersubcription } from "@/utils/Schema";
 import { useUser } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
+import Link from "next/link";
 import { Result } from "postcss";
 import React, { useContext, useEffect, useState } from "react";
 
@@ -92,9 +93,11 @@ const Usagetrack = () => {
           {totaluse} / {max} Used
         </h2>
       </div>
-      <Button className="w-full my-3 text-primary" variant={"secondary"}>
-        Upgrade
-      </Button>
+      <Link href={"/dashboard/billing"}>
+        <Button className="w-full my-3 text-primary" variant={"secondary"}>
+          Upgrade
+        </Button>
+      </Link>
     </div>
   );
 };
