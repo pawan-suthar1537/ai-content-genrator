@@ -4,13 +4,11 @@ import { Button } from "@/components/ui/button";
 import { db } from "@/utils/DB";
 import { AIOutput } from "@/utils/Schema";
 import { useUser } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import React, { useContext, useEffect, useState } from "react";
 
 const Usagetrack = () => {
   const { user } = useUser();
-  //   console.log(user);
   const { totaluse, settotaluse } = useContext(Totalusagecontect);
 
   useEffect(() => {
@@ -18,13 +16,17 @@ const Usagetrack = () => {
   }, [user]);
 
   const getdata = async () => {
-    if (!user) return;
+    if (!user?.primaryEmailAddress?.emailAddress) {
+      console.error("User email is required");
+      return;
+    }
 
     try {
+      const emailAddress = user.primaryEmailAddress.emailAddress;
       const res = await db
         .select()
         .from(AIOutput)
-        .where(eq(AIOutput.createdBy, user?.primaryEmailAddress?.emailAddress));
+        .where(eq(AIOutput.createdBy, emailAddress));
 
       calculateTotal(res);
       console.log("res", res);
