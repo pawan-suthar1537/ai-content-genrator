@@ -53,7 +53,10 @@ export default function Home() {
                 <p className="text-gray-700">
                   Responsive, and mobile-first project on the web.
                 </p>
-                <a href="#" className="text-blue-500 mt-4 inline-block">
+                <a
+                  href="/dashboard"
+                  className="text-blue-500 mt-4 inline-block"
+                >
                   Learn more
                 </a>
               </div>
@@ -66,7 +69,10 @@ export default function Home() {
                 <p className="text-gray-700">
                   Components are easily customized and extendable.
                 </p>
-                <a href="#" className="text-blue-500 mt-4 inline-block">
+                <a
+                  href="/dashboard"
+                  className="text-blue-500 mt-4 inline-block"
+                >
                   Learn more
                 </a>
               </div>
@@ -79,7 +85,10 @@ export default function Home() {
                 <p className="text-gray-700">
                   Every component and plugin is well documented.
                 </p>
-                <a href="#" className="text-blue-500 mt-4 inline-block">
+                <a
+                  href="/dashboard"
+                  className="text-blue-500 mt-4 inline-block"
+                >
                   Learn more
                 </a>
               </div>
@@ -92,7 +101,10 @@ export default function Home() {
                 <p className="text-gray-700">
                   Contact us 24 hours a day, 7 days a week.
                 </p>
-                <a href="#" className="text-blue-500 mt-4 inline-block">
+                <a
+                  href="/dashboard"
+                  className="text-blue-500 mt-4 inline-block"
+                >
                   Learn more
                 </a>
               </div>
