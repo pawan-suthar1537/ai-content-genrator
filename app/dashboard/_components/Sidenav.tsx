@@ -49,7 +49,7 @@ const Sidenav = () => {
           <Link key={index} href={item.href}>
             <div
               key={index}
-              className={`flex gap-2 p-3 mb-3 rounded-lg hover:bg-primary hover:text-white cursor-pointer items-center ${
+              className={`flex gap-2 p-3 mb-3 rounded-lg hover:bg-primary hover:text-white cursor-pointer items-center select-none ${
                 path == item.href && "bg-primary text-white"
               }`}
             >
